@@ -2,16 +2,16 @@
 <testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="39022" started-at="2019-12-24T04:51:12Z" finished-at="2019-12-24T04:51:51Z">
+  <suite name="Default suite" duration-ms="67364" started-at="2020-04-02T18:31:24Z" finished-at="2020-04-02T18:32:31Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="39022" started-at="2019-12-24T04:51:12Z" finished-at="2019-12-24T04:51:51Z">
-      <class name="Zest.Money.Assignment_1">
-        <test-method status="PASS" signature="comparePriceBetweenAmazonFlipkart()[pri:0, instance:Zest.Money.Assignment_1@724af044]" name="comparePriceBetweenAmazonFlipkart" duration-ms="38981" started-at="2019-12-24T04:51:12Z" finished-at="2019-12-24T04:51:51Z">
+    <test name="Default test" duration-ms="67364" started-at="2020-04-02T18:31:24Z" finished-at="2020-04-02T18:32:31Z">
+      <class name="Zest.Money.fetchLinksAmazon">
+        <test-method status="PASS" signature="fetchLinks()[pri:0, instance:Zest.Money.fetchLinksAmazon@1f3165e7]" name="fetchLinks" duration-ms="67078" started-at="2020-04-02T18:31:24Z" finished-at="2020-04-02T18:32:31Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- comparePriceBetweenAmazonFlipkart -->
-      </class> <!-- Zest.Money.Assignment_1 -->
+        </test-method> <!-- fetchLinks -->
+      </class> <!-- Zest.Money.fetchLinksAmazon -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

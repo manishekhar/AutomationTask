@@ -3,17 +3,41 @@ package Zest.Money;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 
 
 
 public class Methods
 {
-	public static WebDriver driver;	
+	public static WebDriver driver;
+	/* 1. Laptop
+	 * 2. Kurti
+	 * 3. Tshirt
+	 * 4. Shirt
+	 * 5. Mens Jeans
+	 * 6. Womens Jeans
+	 * 7. Mens Shoes
+	 * 8. Womens Shoes
+	 * 9. Mobile
+	 * 10.Television
+	 * 11. ac
+	 * 12. Fridge
+	 * 13. Gyser
+	 * 14. Ladies Top
+	 * 15. Bra
+	 * 16. Panty
+	 * 17. Nighty
+	 * 18. Cooler
+	 * 19.  
+	 */
+	public String productName = "Mens Jeans";
 
 	public static String getPropertyValue(String Key) throws IOException
 	{
@@ -41,73 +65,143 @@ public static void startBrowser(){
 
 
 
-
- public static String getDataAmazon() throws IOException
+ public void getDataAmazon() throws IOException, InterruptedException
  {
 	 startBrowser();
 	 driver.manage().window().maximize();
 	 driver.get(getPropertyValue("AmazonUrl"));
-	 driver.findElement(By.xpath(getPropertyValue("amazonSearch"))).sendKeys("iPhone XR (64GB) - Yellow");
+	 driver.findElement(By.id("nav-link-accountList")).click();
+	 driver.findElement(By.id("ap_email")).sendKeys("manishekhar947@gmail.com");
+	 driver.findElement(By.id("continue")).click();
+	 driver.findElement(By.id("ap_password")).sendKeys("Mani@6746");
+	 driver.findElement(By.id("signInSubmit")).click();
+	 driver.findElement(By.id("continue")).click();
+	 Thread.sleep(20000);
+	 driver.findElement(By.xpath(getPropertyValue("amazonSearch"))).sendKeys(productName);
 	 driver.findElement(By.xpath(getPropertyValue("amazonSearchSubmit"))).click();
-	 String priceAmz = driver.findElement(By.xpath(getPropertyValue("piceAmazon"))).getText();
-	 System.out.println("The Price in Amazon is "+priceAmz);
-	 return priceAmz;
-	 
- }
- public static String  launchUrl() throws IOException{
-	 
-	 driver.manage().window().maximize();
-	 driver.get(getPropertyValue("TripAdvisorUrl"));
-	return null;
-	 
- }
- 
- public static String getDataFlipKart() throws IOException, InterruptedException
- {
-	 startBrowser();
-	 driver.manage().window().maximize();  
-	 driver.get(getPropertyValue("FlipKartUrl"));
-	 try {
-		 driver.findElement(By.xpath(getPropertyValue("fkartCloseBtn"))).click();
+	 if(productName.equalsIgnoreCase("Laptop"))
+	 {
+		 Laptop();
 	 }
-	 catch (Exception e) {
-		 e.printStackTrace();
-	}  
-	 driver.findElement(By.xpath(getPropertyValue("flipkartSearch"))).sendKeys("iPhone XR (64GB) - Yellow");
-	 driver.findElement(By.xpath(getPropertyValue("flipkartSub"))).click();
-	 Thread.sleep(5000);
-	 String priceFlip = driver.findElement(By.xpath(getPropertyValue("priceFlip"))).getText();
-	 priceFlip = priceFlip.replace("₹","");
-	 System.out.println("The Price in Flipkart is "+priceFlip); 
-	 return priceFlip;
- }
+	 else if(productName.equalsIgnoreCase("Kurti"))
+	 {
+		 Kurti();
+	 }
+	 else if(productName.equalsIgnoreCase("Tshirt"))
+	 {
+		 Tshirt(); 
+	  }
+	 else if(productName.equalsIgnoreCase("Shirt"))
+	 {
+		 Shirt();
+	 }
+	 else if(productName.equalsIgnoreCase("Mens Jeans"))
+	 {
+		 Mens_Jeans();
+	 }
+	 else
+	 {
+		 System.out.println("New Item Has been Added");
+	 }
+}
+
  
- 	public static String removeSpecialchar(String str1) {
- 		String string1="";
- 		 for(int i=0;i<str1.length();i++)
- 		   {
- 		   int ch = (int)str1.charAt(i);
- 		   if(ch<=57 && ch>=48)   // 0 is represented as 48    and    9 is represented as 57 in ASCII
- 		   {
- 		   string1=string1+str1.charAt(i);   // concatenation of number
- 		   } 
- 		   }
- 		
- 		return string1;
- 	}
-   
-   public static void comparePrice(String priceAmz , String priceFlip )
-   {	 
-	   priceAmz = removeSpecialchar(priceAmz);
-	   priceFlip =removeSpecialchar(priceFlip);
-	
-	   if(Integer.parseInt(priceFlip) > Integer.parseInt(priceAmz)) {
-		   
-		   System.out.println("The price of Amazon"+priceAmz+"is Lesser than"+priceFlip);
-	   }
-	   else {
-		   System.out.println("The price of FlipKart"+priceFlip+"is Lesser than"+priceAmz);
-	   }
-   }
+
+
+public void Laptop()
+{
+	List<WebElement> element = driver.findElements(By.xpath("//*[@id=\"search\"]/div[1]/div[2]/div/span[4]/div[1]/div/div/span/div/div/div[2]/div[2]/div/div[1]/div/div/div[1]/h2/a/span"));
+	 for(int i=1; i<=element.size();i++)
+	 {
+		 String itemName = driver.findElement(By.xpath("//*[@id=\"search\"]/div[1]/div[2]/div/span[4]/div[1]/div["+i+"]/div/span/div/div/div[2]/div[2]/div/div[1]/div/div/div[1]/h2/a/span")).getText();
+		 System.out.println(itemName);
+	 }
+}
+
+public void Kurti() 
+{
+	List<WebElement> element = driver.findElements(By.xpath("//*[@id=\"search\"]/div[1]/div[2]/div/span[4]/div[1]/div/div/span/div/div/div[3]/h2/a/span"));		 for(int i=1; i<=element.size();i++)
+	 {
+		 String itemName = driver.findElement(By.xpath("//*[@id=\"search\"]/div[1]/div[2]/div/span[4]/div[1]/div["+i+"]/div/span/div/div/div[3]/h2/a/span")).getText();
+		 System.out.println(itemName);
+	 }
+}
+
+public void Tshirt()
+{
+	List<WebElement> element = driver.findElements(By.xpath("//*[@id=\"search\"]/div[1]/div[2]/div/span[4]/div[1]/div/div/span/div/div/div[3]/h2/a/span"));		 for(int i=1; i<=element.size();i++)
+	 {
+		 String itemName = driver.findElement(By.xpath("//*[@id=\"search\"]/div[1]/div[2]/div/span[4]/div[1]/div["+i+"]/div/span/div/div/div[3]/h2/a/span")).getText();
+		 System.out.println(itemName);
+	 }
+}
+
+public void Shirt()
+{
+	List<WebElement> element = driver.findElements(By.xpath("//*[@id=\"search\"]/div[1]/div[2]/div/span[4]/div[1]/div/div/span/div/div/div[3]/h2/a/span"));		 for(int i=1; i<=element.size();i++)
+	 {
+		 String itemName = driver.findElement(By.xpath("//*[@id=\"search\"]/div[1]/div[2]/div/span[4]/div[1]/div["+i+"]/div/span/div/div/div[3]/h2/a/span")).getText();
+		 System.out.println(itemName);
+	 }
+}
+
+
+public void Mens_Jeans()
+{
+	driver.findElement(By.xpath("//*[@id=\"p_89/Ben Martin\"]/span/a/span")).click();
+	 List<WebElement> element = driver.findElements(By.xpath("//*[@id=\"search\"]/div[1]/div[2]/div/span[4]/div[1]/div/div/span/div/div/div[3]/h2/a/span"));		 for(int i=1; i<=element.size();i++)
+	 {
+		 String itemName = driver.findElement(By.xpath("//*[@id=\"search\"]/div[1]/div[2]/div/span[4]/div[1]/div["+i+"]/div/span/div/div/div[3]/h2/a/span")).getText();
+		 System.out.println(itemName);
+	 }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
