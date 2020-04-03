@@ -7,16 +7,20 @@ import java.util.List;
 import java.util.Properties;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 
 public class Methods
 {
 	public static WebDriver driver;
+	public static  String HomeScreen= "";
 	/* 1. Laptop
 	 * 2. Kurti
 	 * 3. Tshirt
@@ -37,8 +41,8 @@ public class Methods
 	 * 18. Cooler
 	 * 19.  
 	 */
-	public String productName = "Mens Jeans";
-
+	public String productName = "Laptop";
+	
 	public static String getPropertyValue(String Key) throws IOException
 	{
 		Properties OR;
@@ -62,6 +66,11 @@ public static void startBrowser(){
 		driver = new ChromeDriver();
 	}
 
+public void closeApplication()
+{
+	driver.quit();
+}
+
 
 
 
@@ -70,10 +79,11 @@ public static void startBrowser(){
 	 startBrowser();
 	 driver.manage().window().maximize();
 	 driver.get(getPropertyValue("AmazonUrl"));
+	 HomeScreen = driver.getCurrentUrl();
 	 driver.findElement(By.id("nav-link-accountList")).click();
-	 driver.findElement(By.id("ap_email")).sendKeys("manishekhar947@gmail.com");
+	 driver.findElement(By.id("ap_email")).sendKeys(getPropertyValue("UserName"));
 	 driver.findElement(By.id("continue")).click();
-	 driver.findElement(By.id("ap_password")).sendKeys("Mani@6746");
+	 driver.findElement(By.id("ap_password")).sendKeys(getPropertyValue("password"));
 	 driver.findElement(By.id("signInSubmit")).click();
 	 driver.findElement(By.id("continue")).click();
 	 Thread.sleep(20000);
@@ -108,19 +118,44 @@ public static void startBrowser(){
  
 
 
-public void Laptop()
+public void Laptop() throws IOException, InterruptedException
 {
-	List<WebElement> element = driver.findElements(By.xpath("//*[@id=\"search\"]/div[1]/div[2]/div/span[4]/div[1]/div/div/span/div/div/div[2]/div[2]/div/div[1]/div/div/div[1]/h2/a/span"));
-	 for(int i=1; i<=element.size();i++)
-	 {
-		 String itemName = driver.findElement(By.xpath("//*[@id=\"search\"]/div[1]/div[2]/div/span[4]/div[1]/div["+i+"]/div/span/div/div/div[2]/div[2]/div/div[1]/div/div/div[1]/h2/a/span")).getText();
-		 System.out.println(itemName);
-	 }
+	try {
+		for(int j=0; j<=20; j++)
+		{
+			List<WebElement> element = driver.findElements(By.xpath(getPropertyValue("laptop")));
+			 for(int i=1; i<=element.size();i++)
+			 {
+				 String itemName = driver.findElement(By.xpath("//*[@id=\"search\"]/div[1]/div[2]/div/span[4]/div[1]/div["+i+"]/div/span/div/div/div[2]/div[2]/div/div[1]/div/div/div[1]/h2/a/span")).getText();
+				 System.out.println(itemName);
+				 JavascriptExecutor js = (JavascriptExecutor) driver;
+				 js.executeScript("window.scrollBy(0, 200)", "");
+			 }
+			 WebDriverWait wait=new WebDriverWait(driver, 20);
+			 wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(getPropertyValue("laptopNext"))));
+			 boolean nextButton = driver.findElement(By.xpath(getPropertyValue("laptopNext"))).isEnabled();
+			 if(nextButton==true)
+			 {
+				
+				 driver.findElement(By.xpath(getPropertyValue("laptopNext"))).click();	 
+			 }
+			 else
+			 {
+				 driver.get(HomeScreen);	 
+			 }
+			
+		}
+	} catch (Exception e) 
+	{
+		driver.get(HomeScreen);	
+	}
+	
 }
 
-public void Kurti() 
+public void Kurti() throws IOException 
 {
-	List<WebElement> element = driver.findElements(By.xpath("//*[@id=\"search\"]/div[1]/div[2]/div/span[4]/div[1]/div/div/span/div/div/div[3]/h2/a/span"));		 for(int i=1; i<=element.size();i++)
+	List<WebElement> element = driver.findElements(By.xpath(getPropertyValue("kurti")));
+	for(int i=1; i<=element.size();i++)
 	 {
 		 String itemName = driver.findElement(By.xpath("//*[@id=\"search\"]/div[1]/div[2]/div/span[4]/div[1]/div["+i+"]/div/span/div/div/div[3]/h2/a/span")).getText();
 		 System.out.println(itemName);
@@ -129,7 +164,8 @@ public void Kurti()
 
 public void Tshirt()
 {
-	List<WebElement> element = driver.findElements(By.xpath("//*[@id=\"search\"]/div[1]/div[2]/div/span[4]/div[1]/div/div/span/div/div/div[3]/h2/a/span"));		 for(int i=1; i<=element.size();i++)
+	List<WebElement> element = driver.findElements(By.xpath("//*[@id=\"search\"]/div[1]/div[2]/div/span[4]/div[1]/div/div/span/div/div/div[3]/h2/a/span"));
+	for(int i=1; i<=element.size();i++)
 	 {
 		 String itemName = driver.findElement(By.xpath("//*[@id=\"search\"]/div[1]/div[2]/div/span[4]/div[1]/div["+i+"]/div/span/div/div/div[3]/h2/a/span")).getText();
 		 System.out.println(itemName);
@@ -138,7 +174,8 @@ public void Tshirt()
 
 public void Shirt()
 {
-	List<WebElement> element = driver.findElements(By.xpath("//*[@id=\"search\"]/div[1]/div[2]/div/span[4]/div[1]/div/div/span/div/div/div[3]/h2/a/span"));		 for(int i=1; i<=element.size();i++)
+	List<WebElement> element = driver.findElements(By.xpath("//*[@id=\"search\"]/div[1]/div[2]/div/span[4]/div[1]/div/div/span/div/div/div[3]/h2/a/span"));
+	for(int i=1; i<=element.size();i++)
 	 {
 		 String itemName = driver.findElement(By.xpath("//*[@id=\"search\"]/div[1]/div[2]/div/span[4]/div[1]/div["+i+"]/div/span/div/div/div[3]/h2/a/span")).getText();
 		 System.out.println(itemName);
@@ -149,7 +186,8 @@ public void Shirt()
 public void Mens_Jeans()
 {
 	driver.findElement(By.xpath("//*[@id=\"p_89/Ben Martin\"]/span/a/span")).click();
-	 List<WebElement> element = driver.findElements(By.xpath("//*[@id=\"search\"]/div[1]/div[2]/div/span[4]/div[1]/div/div/span/div/div/div[3]/h2/a/span"));		 for(int i=1; i<=element.size();i++)
+	 List<WebElement> element = driver.findElements(By.xpath("//*[@id=\"search\"]/div[1]/div[2]/div/span[4]/div[1]/div/div/span/div/div/div[3]/h2/a/span"));
+	 for(int i=1; i<=element.size();i++)
 	 {
 		 String itemName = driver.findElement(By.xpath("//*[@id=\"search\"]/div[1]/div[2]/div/span[4]/div[1]/div["+i+"]/div/span/div/div/div[3]/h2/a/span")).getText();
 		 System.out.println(itemName);

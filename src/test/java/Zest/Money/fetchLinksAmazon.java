@@ -9,6 +9,7 @@ public class fetchLinksAmazon extends Methods
 	public void fetchLinks() throws IOException, Throwable
 	{      
 		getDataAmazon();
+		closeApplication();
 	}  
 
 }
